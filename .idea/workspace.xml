@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7216c6f7-2855-4881-b170-360dd44c837b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/ico-contract.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/contracts/ConvertLib.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/contracts/MetaCoin.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/build/contracts/Migrations.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contracts/.placeholder" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contracts/ConvertLib.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contracts/CryptoHuntGameIco.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contracts/MetaCoin.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/contracts/Migrations.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/migrations/1_initial_migration.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/migrations/2_deploy_contracts.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/dotenv/CHANGELOG.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/dotenv/LICENSE" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/dotenv/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/dotenv/config.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/dotenv/lib/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/dotenv/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.babelrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.env.example" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.eslintrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.jshintrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.node-version" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.solcover.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.soliumignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.soliumrc.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/.travis.yml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/CONTRIBUTING.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/LICENSE" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/audit/ZeppelinAudit.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/Bounty.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/DayLimit.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ECRecovery.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/LimitBalance.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/MerkleProof.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ReentrancyGuard.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/Crowdsale.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/FinalizableCrowdsale.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/RefundVault.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/examples/SampleCrowdsale.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/examples/SimpleToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/lifecycle/Destructible.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/lifecycle/Migrations.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/lifecycle/Pausable.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/lifecycle/TokenDestructible.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/math/Math.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/math/SafeMath.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/BasicTokenMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/BurnableTokenMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/CappedCrowdsaleImpl.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/DayLimitMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/DetailedERC20Mock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/ERC23TokenMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/FinalizableCrowdsaleImpl.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/ForceEther.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/HasNoEtherTest.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/InsecureTargetBounty.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/LimitBalanceMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/PausableMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/PausableTokenMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/PullPaymentMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/RBACMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/ReentrancyAttack.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/ReentrancyMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/RefundableCrowdsaleImpl.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/SafeERC20Helper.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/SafeMathMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/SecureTargetBounty.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/mocks/StandardTokenMock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/CanReclaimToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/Claimable.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/Contactable.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/DelayedClaimable.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/HasNoContracts.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/HasNoEther.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/HasNoTokens.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/NoOwner.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/rbac/RBAC.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/rbac/Roles.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/payment/PullPayment.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/payment/SplitPayment.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/BasicToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/BurnableToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/CappedToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/DetailedERC20.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/ERC20.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/ERC20Basic.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/MintableToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/PausableToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/SafeERC20.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/StandardToken.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/TokenTimelock.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/TokenVesting.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/Makefile" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/basictoken.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/bounty.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/claimable.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/conf.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/contract-security-patterns.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/delayedclaimable.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/developer-resources.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/ecrecovery.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/getting-started.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/index.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/killable.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/license.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/limitbalance.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/math.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/merkleproof.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/migrations.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/ownable.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/pausable.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/pullpayment.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/safemath.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/docs/source/standardtoken.rst" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/ethpm.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/migrations/1_initial_migration.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/migrations/2_deploy_contracts.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/scripts/coverage.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/scripts/test.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/.eslintrc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/BasicToken.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/Bounty.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/BurnableToken.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/CanReclaimToken.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/CappedCrowdsale.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/CappedToken.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/Claimable.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/Contactable.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/Crowdsale.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/DayLimit.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/DelayedClaimble.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/Destructible.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/DetailedERC20.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/ECRecovery.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/FinalizableCrowdsale.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/HasNoContracts.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/HasNoEther.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/HasNoTokens.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/LimitBalance.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/MerkleProof.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/MintableToken.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/Ownable.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/Pausable.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/PausableToken.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/PullPayment.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/RBAC.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/ReentrancyGuard.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/RefundVault.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/RefundableCrowdsale.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/SafeERC20.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/SafeMath.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/SampleCrowdsale.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/SplitPayment.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/StandardToken.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/TokenDestructible.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/TokenTimelock.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/TokenVesting.test.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/EVMRevert.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/EVMThrow.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/advanceToBlock.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/assertJump.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/assertRevert.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/ether.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/expectEvent.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/expectThrow.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/hashMessage.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/increaseTime.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/latestTime.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/merkleTree.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/toPromise.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/test/helpers/transactionMined.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/zeppelin-solidity/truffle-config.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/.placeholder" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/TestMetacoin.sol" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/metacoin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle-config.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/truffle.js" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="RefundableCrowdsale.sol" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="39" lean-forward="false" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FinalizableCrowdsale.sol" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/FinalizableCrowdsale.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="39" lean-forward="true" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Crowdsale.sol" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/Crowdsale.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CryptoHuntGameIco.sol" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/contracts/CryptoHuntGameIco.sol">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/truffle.js" />
+        <option value="$PROJECT_DIR$/contracts/CryptoHuntGameIco.sol" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1680" />
+    <option name="height" value="1027" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ico-contract" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ico-contract" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="ico-contract" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ico-contract" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="build" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="ico-contract" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ico-contract" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="build" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="contracts" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="ico-contract" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ico-contract" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="contracts" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="ico-contract" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ico-contract" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="migrations" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7216c6f7-2855-4881-b170-360dd44c837b" name="Default" comment="" />
+      <created>1514497630970</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1514497630970</updated>
+      <workItem from="1514497632227" duration="3965000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="3965000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
+    <layout>
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/truffle-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/contracts/Migrations.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/migrations/1_initial_migration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/migrations/2_deploy_contracts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/truffle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="2" lean-forward="true" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/contracts/ConvertLib.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/contracts/MetaCoin.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/DelayedClaimable.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/lifecycle/TokenDestructible.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/lifecycle/Pausable.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="9" lean-forward="false" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/SafeERC20.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/TokenTimelock.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/RefundVault.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/BasicToken.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/PausableToken.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="30" lean-forward="true" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/DetailedERC20.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/ERC20Basic.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/ERC20.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="21" lean-forward="true" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/BurnableToken.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/StandardToken.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/token/MintableToken.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="9" lean-forward="false" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/examples/SampleCrowdsale.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="24" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="39" lean-forward="false" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/FinalizableCrowdsale.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="39" lean-forward="true" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/crowdsale/Crowdsale.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/contracts/CryptoHuntGameIco.sol">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
