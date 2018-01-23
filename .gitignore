@@ -47,3 +47,5 @@ packages/*
 .vagrant/*
 
 .env
+/token-vesting-ui/
+node_modules
