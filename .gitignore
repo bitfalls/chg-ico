@@ -50,3 +50,4 @@ packages/*
 /token-vesting-ui/
 /node_modules
 /build
+*Flat.sol
