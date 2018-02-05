@@ -48,4 +48,5 @@ packages/*
 
 .env
 /token-vesting-ui/
-node_modules
+/node_modules
+/build
