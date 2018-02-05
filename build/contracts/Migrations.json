@@ -220,7 +220,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1903,
+                                  "referencedDeclaration": 2300,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -357,7 +357,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 1903,
+                                  "referencedDeclaration": 2300,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -811,17 +811,13 @@
     "name": "SourceUnit",
     "src": "0:514:4"
   },
-  "compiler": {
-    "name": "solc",
-    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
-  },
   "networks": {
-    "1": {
+    "987": {
       "events": {},
       "links": {},
-      "address": "0x4de3945e222219d8e696a46b31aacb5ddf53b4af"
+      "address": "0x4bbed419fcf88555e7dcdb56056d76cdee6f5579"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-23T15:07:24.430Z"
+  "updatedAt": "2018-02-05T12:48:54.562Z"
 }
