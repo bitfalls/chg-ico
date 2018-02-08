@@ -1,17 +1,19 @@
 pragma solidity ^0.4.11;
 
-import "zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol";
-import "zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol";
-import "zeppelin-solidity/contracts/token/TokenVesting.sol";
+import "../node_modules/zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol";
+import "../node_modules/zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol";
 
 /**
  * @title CryptoHunt ICO
  * CappedCrowdsale - sets a max boundary for raised funds
  * RefundableCrowdsale - set a min goal to be reached and returns funds if it's not met
+ * @deprecated
+ * Being rewritten in CryptoHuntIco.sol - ignore this
  */
 contract CryptoHuntGameIco is CappedCrowdsale, RefundableCrowdsale {
 
     mapping (address => bool) wl;
+
 
     event Whitelisted(address addr, bool status);
 
@@ -23,7 +25,13 @@ contract CryptoHuntGameIco is CappedCrowdsale, RefundableCrowdsale {
     }
 
     function buyTokens(address beneficiary) public payable {
+        require(startTime + 86400 > now);
+        super.buyTokens(beneficiary);
+    }
+
+    function buyTokensWhitelist(address beneficiary) public payable {
         require(wl[beneficiary]);
+        // Reduce max amount, let them keep buying
         super.buyTokens(beneficiary);
     }
 

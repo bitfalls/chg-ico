@@ -51,3 +51,4 @@ packages/*
 /node_modules
 /build
 *Flat.sol
+!/contracts/*
