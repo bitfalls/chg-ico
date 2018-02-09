@@ -202,7 +202,7 @@ contract CryptoHuntIco is Ownable {
 
     function forceRefundState() external onlyOwner {
         vault.enableRefunds();
-        token.transfer(owner, unsoldTokens());
+        token.transfer(owner, token.balanceOf(address(this)));
         Finalized();
         isFinalized = true;
         forcedRefund = true;
@@ -237,7 +237,7 @@ contract CryptoHuntIco is Ownable {
 
         } else {
             vault.enableRefunds();
-            token.transfer(owner, unsoldTokens());
+            token.transfer(owner, token.balanceOf(address(this)));
         }
         // Transfer leftover tokens to owner
     }
@@ -255,11 +255,11 @@ contract CryptoHuntIco is Ownable {
     function claimTokens(address _beneficiary) public {
         require(isFinalized);
 
-        // Need to be able to withdraw by having some
-        require(tokenBuyersMapping[_beneficiary] > 0 && tokenBuyersRemaining[_beneficiary] > 0);
-
         // Determine fraction of deserved tokens for user
         fractionalize(_beneficiary);
+
+        // Need to be able to withdraw by having some
+        require(tokenBuyersMapping[_beneficiary] > 0 && tokenBuyersRemaining[_beneficiary] > 0);
 
         // Max 8 because we're giving out 12.5% per week and 8 * 12.5% = 100%
         uint256 w = weeksFromEnd();
@@ -309,7 +309,7 @@ contract CryptoHuntIco is Ownable {
     // Withdraw all the leftover tokens if more than 2 weeks since the last withdraw opportunity for contributors has passed
     function withdrawRest() external onlyOwner {
         require(weeksFromEnd() > 9);
-        token.transfer(owner, unsoldTokens());
+        token.transfer(owner, token.balanceOf(address(this)));
     }
 
     // Helper function to do rounded division
