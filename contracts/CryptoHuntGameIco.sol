@@ -7,7 +7,7 @@ import "../node_modules/zeppelin-solidity/contracts/crowdsale/RefundableCrowdsal
  * @title CryptoHunt ICO
  * CappedCrowdsale - sets a max boundary for raised funds
  * RefundableCrowdsale - set a min goal to be reached and returns funds if it's not met
- * @deprecated
+ * This contract is deprecated
  * Being rewritten in CryptoHuntIco.sol - ignore this
  */
 contract CryptoHuntGameIco is CappedCrowdsale, RefundableCrowdsale {
