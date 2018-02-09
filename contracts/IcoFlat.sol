@@ -1,186 +1,5 @@
 pragma solidity ^0.4.13;
 
-contract TokenTimedChestMulti {
-
-    struct Beneficiary {
-        address withdrawer;
-        uint releaseTime;
-        ERC20 token;
-        uint amount;
-    }
-
-    // The addresses allowed to do withdraws
-    Beneficiary[] public beneficiaries;
-
-    // Beneficiary-added tokens so far
-    mapping (address => uint) public tokensAdded;
-
-    // Owner / creator of the contract
-    address public owner;
-
-    modifier onlyAfter(uint _time) {
-        require(now >= _time);
-        _;
-    }
-
-    modifier onlyBy(address _account) {
-        require(msg.sender == _account);
-        _;
-    }
-
-    function changeOwner(address _newOwner) public onlyBy(owner) {
-        owner = _newOwner;
-    }
-
-    function TokenTimedChestMulti() public {
-        // Define owner of the contract.
-        owner = msg.sender;
-    }
-
-    function addBeneficiary(uint _releaseDelay, uint _amount, address _token, address _beneficiary) public onlyBy(owner) {
-
-        // Upgraded implementation: track who sent how many tokens and then open up addBeneficiary to everyone
-        // Could be really cool public utility contract
-
-        // Sanity checks, only proceed if addresses involved are valid
-        require(address(_token) != 0x0);
-        require(address(_beneficiary) != 0x0);
-        require(_amount > 0);
-        require(_releaseDelay > 0);
-
-        // Find out due time
-        uint newTime = now + (_releaseDelay * 1 seconds);
-
-        // Find out furthest due time for given user and given token
-        uint furthestTime = getFurthestBeneficiaryTime(_beneficiary, _token);
-        // Do not let them add a beneficiaries entry that's before the latest!
-        require(furthestTime < newTime);
-
-        // Add a beneficiary
-        beneficiaries.push(
-            Beneficiary(
-                _beneficiary,
-                newTime,
-                ERC20(_token),
-                _amount
-            )
-        );
-
-        refreshTokenBalance(_token);
-    }
-
-    function refreshTokenBalance(address _token) internal {
-        tokensAdded[_token] = ERC20(_token).balanceOf(address(this));
-    }
-
-    /**
-    * Extracts latest time for specific token that a beneficiary has an entry
-    * in the contract for. This is used so that a user cannot add a ben entry
-    * for an already entered token that happens before the currently set time,
-    * thereby getting to the tokens ahead of time.
-    */
-    function getFurthestBeneficiaryTime(address _beneficiary, address _token) internal view returns (uint) {
-        uint bens = beneficiaries.length;
-        uint latestTime = now;
-        for (uint i = 0; i < bens; i++) {
-            if (
-                beneficiaries[i].withdrawer == _beneficiary
-                && beneficiaries[i].amount > 0
-                && beneficiaries[i].token == ERC20(_token)
-                && beneficiaries[i].releaseTime > latestTime
-            ) {
-                latestTime = beneficiaries[i].releaseTime;
-            }
-        }
-        return latestTime;
-    }
-
-    /**
-    * If a user has many locks in the contract, several of which may have
-    * expired, this will withdraw them all.
-    */
-    function withdrawAllMyDue() external {
-        withdrawAllHisDue(msg.sender);
-    }
-
-    /**
-    * If a user has many locks in the contract, several of which may have
-    * expired, this will let the owner of the contract or this beneficiary
-    * himself withdraw them all at once. If triggered by the owner, the tokens
-    * are of course sent to the beneficiary, not the owner.
-    */
-    function withdrawAllHisDue(address _beneficiary) public {
-
-        require(msg.sender == owner || msg.sender == _beneficiary);
-
-        uint bens = beneficiaries.length;
-        bool sentSomething = false;
-        for (uint i = 0; i < bens; i++) {
-            Beneficiary storage b = beneficiaries[i];
-            if (
-                b.withdrawer == _beneficiary
-                && b.releaseTime < now
-                && b.amount > 0
-                && b.token.balanceOf(address(this)) >= b.amount
-            ) {
-                b.token.transfer(b.withdrawer, b.amount);
-                b.amount = 0;
-                sentSomething = true;
-                refreshTokenBalance(address(b.token));
-            }
-        }
-        assert(sentSomething == true);
-    }
-
-    /**
-    * If a beneficiary knows they are due some tokens but the auto-search
-    * method above is too expensive because of iteration, the beneficiary
-    * can look up the ID in the contract and use that ID in this method.
-    *
-    * Especially useful when withdraws are rare or one-off.
-    */
-    function withdrawSpecific(uint id) external {
-        Beneficiary storage b = beneficiaries[id];
-        require(b.amount > 0);
-        require(b.withdrawer == msg.sender || msg.sender == owner);
-        require(b.releaseTime < now);
-        require(b.token.balanceOf(address(this)) >= b.amount);
-
-        b.token.transfer(b.withdrawer, b.amount);
-        b.amount = 0;
-        refreshTokenBalance(address(b.token));
-    }
-
-
-    /**
-    * Executable by owner of contract. Releases all tokens past due time (so all
-    * unlocked tokens) to their beneficiaries. Only the owner can call this.
-    * Used for mass distribution of tokens after a lockdown period.
-    *
-    * To be eligible for withdrawing, beneficiary's claim:
-    * Must be due, positive, and contract must have more than demanded amount.
-    */
-    function withdrawAllDue() external onlyBy(owner) {
-        uint bens = beneficiaries.length;
-        bool sentSomething = false;
-        /** Go through each, find all due, send if OK */
-        for (uint i = 0; i < bens; i++) {
-            Beneficiary storage b = beneficiaries[i];
-            if (
-                b.releaseTime < now
-                && b.amount > 0
-                && b.token.balanceOf(address(this)) >= b.amount
-            ) {
-                b.token.transfer(b.withdrawer, b.amount);
-                b.amount = 0;
-                sentSomething = true;
-                refreshTokenBalance(address(b.token));
-            }
-        }
-        assert(sentSomething == true);
-    }
-}
-
 library SafeMath {
 
   /**
@@ -291,15 +110,17 @@ contract CryptoHuntIco is Ownable {
     // A sum of tokenbuyers' tokens
     uint256 public tokenBuyersAmount;
     // A mapping of buyers and amounts
-    mapping(address => uint) public tokenBuyersMapping;
+    mapping(address => uint256) public tokenBuyersMapping;
+    mapping(address => uint256) public tokenBuyersFraction;
+    mapping(address => uint256) public tokenBuyersRemaining;
 
-    TokenTimedChestMulti public chest;
+//    TokenTimedChestMulti public chest;
 
     // List of addresses who can purchase in pre-sale
     mapping(address => bool) public wl;
-    address[] public wls;
 
     bool public isFinalized = false;
+    bool public forcedRefund = false;
 
     event Finalized();
 
@@ -350,6 +171,8 @@ contract CryptoHuntIco is Ownable {
         startTime = now;
         whitelistEndTime = startTime.add(wlDuration * 1 seconds);
         endTime = whitelistEndTime.add(duration * 1 seconds);
+
+        //chest = new TokenTimedChestMulti();
     }
 
     // fallback function can be used to buy tokens
@@ -357,10 +180,10 @@ contract CryptoHuntIco is Ownable {
         buyTokens(msg.sender);
     }
 
-    function whitelistAddresses(address[] users) onlyOwner public {
+    // ["0x1dF184eA46b58719A7213f4c8a03870A309BcD64", "0xb794f5ea0ba39494ce839613fffba74279579268", "0x281055afc982d96fab65b3a49cac8b878184cb16", "0x6f46cf5569aefa1acc1009290c8e043747172d89", "0xa1dc8d31493681411a5137c6D67bD01935b317D3", "0x90e63c3d53e0ea496845b7a03ec7548b70014a91", "0x53d284357ec70ce289d6d64134dfac8e511c8a3d", "0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8", "0xe853c56864a2ebe4576a807d26fdc4a0ada51919", "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98", "0xf27daff52c38b2c373ad2b9392652ddf433303c4", "0x3d2e397f94e415d7773e72e44d5b5338a99e77d9", "0x6f52730dba7b02beefcaf0d6998c9ae901ea04f9", "0xdc870798b30f74a17c4a6dfc6fa33f5ff5cf5770", "0x1b3cb81e51011b549d78bf720b0d924ac763a7c2", "0xb8487eed31cf5c559bf3f4edd166b949553d0d11", "0x51f9c432a4e59ac86282d6adab4c2eb8919160eb", "0xfe9e8709d3215310075d67e3ed32a380ccf451c8", "0xfca70e67b3f93f679992cd36323eeb5a5370c8e4", "0x07ee55aa48bb72dcc6e9d78256648910de513eca", "0x900d0881a2e85a8e4076412ad1cefbe2d39c566c", "0x3bf86ed8a3153ec933786a02ac090301855e576b", "0xbf09d77048e270b662330e9486b38b43cd781495", "0xdb6fd484cfa46eeeb73c71edee823e4812f9e2e1", "0x847ed5f2e5dde85ea2b685edab5f1f348fb140ed", "0x9d2bfc36106f038250c01801685785b16c86c60d", "0x2b241f037337eb4acc61849bd272ac133f7cdf4b", "0xab5801a7d398351b8be11c439e05c5b3259aec9b", "0xa7e4fecddc20d83f36971b67e13f1abc98dfcfa6", "0x9f1de00776811f916790be357f1cabf6ac1eca65", "0x7d04d2edc058a1afc761d9c99ae4fc5c85d4c8a6"]
+    function whitelistAddresses(address[] users) onlyOwner external {
         for (uint i = 0; i < users.length; i++) {
             wl[users[i]] = true;
-            wls.push(users[i]);
             Whitelisted(users[i], true);
         }
     }
@@ -385,18 +208,15 @@ contract CryptoHuntIco is Ownable {
         // update state
         weiRaised = weiRaised.add(weiAmount);
 
+        if (tokenBuyersMapping[beneficiary] == 0) {
+            tokenBuyersArray.push(beneficiary);
+        }
         tokenBuyersMapping[beneficiary] = tokenBuyersMapping[beneficiary].add(tokenAmount);
-        tokenBuyersArray.push(beneficiary);
-        tokenBuyersAmount.add(tokenAmount);
+        tokenBuyersAmount = tokenBuyersAmount.add(tokenAmount);
 
         TokenPurchase(msg.sender, beneficiary, weiAmount, tokenAmount);
 
         forwardFunds();
-    }
-
-    // @return true if crowdsale event has ended
-    function hasEnded() public view returns (bool) {
-        return (weiRaised > hardcap) || now > endTime;
     }
 
     function getTokenAmount(uint256 weiAmount) internal view returns (uint256) {
@@ -411,7 +231,7 @@ contract CryptoHuntIco is Ownable {
     // @return true if the transaction can buy tokens
     function validPurchase() internal view returns (bool) {
         // Sent more than 0 eth
-        bool nonZeroPurchase = msg.value != 0;
+        bool nonZeroPurchase = msg.value > 0;
 
         // Still under hardcap
         bool withinCap = weiRaised.add(msg.value) <= hardcap;
@@ -420,7 +240,7 @@ contract CryptoHuntIco is Ownable {
         bool withinPeriod = now >= whitelistEndTime && now <= endTime;
 
         // if whitelisted, and in wl period, and value is <= 5, ok
-        bool whitelisted = now >= startTime && now <= whitelistEndTime && msg.value <= 5 && wl[msg.sender];
+        bool whitelisted = now >= startTime && now <= whitelistEndTime && msg.value <= 5 ether && wl[msg.sender];
 
         return withinCap && (withinPeriod || whitelisted) && nonZeroPurchase;
     }
@@ -431,7 +251,7 @@ contract CryptoHuntIco is Ownable {
      */
     function finalize() onlyOwner public {
         require(!isFinalized);
-        require(hasEnded());
+        require((weiRaised == hardcap) || now > endTime);
 
         finalization();
         Finalized();
@@ -443,7 +263,7 @@ contract CryptoHuntIco is Ownable {
     // if crowdsale is unsuccessful, investors can claim refunds here
     function claimRefund() public {
         require(isFinalized);
-        require(!goalReached());
+        require(!goalReached() || forcedRefund);
 
         vault.refund(msg.sender);
     }
@@ -457,51 +277,150 @@ contract CryptoHuntIco is Ownable {
         token.transfer(owner, token.balanceOf(address(this)));
         Finalized();
         isFinalized = true;
+        forcedRefund = true;
     }
 
     /**
-     * @dev Can be overridden to add finalization logic. The overriding function
-     * should call super.finalization() to ensure the chain of finalization is
-     * executed entirely.
+     * Wraps up the crowdsale
+     *
+     * If goal was not reached, refund mode is activated, tokens are sent back to crowdfund owner. Otherwise:
+     *
+     * - vault is closed and Eth funds are forwarded to wallet
+     * -
      */
     function finalization() internal {
 
         if (goalReached()) {
-            vault.close();
-            // create timed chests for all participants
-            createTimedChest();
-            token.transfer(chest, tokenBuyersAmount);
 
-            for (uint i = 0; i < tokenBuyersArray.length; i++) {
-                uint256 bought = tokenBuyersMapping[tokenBuyersArray[i]];
-                uint256 fraction = bought.div(uint256(8));
-                for (uint8 j = 1; j <= 8; j++) {
-                    // addBeneficiary(uint _releaseDelay, uint _amount, address _token, address _beneficiary)
-                    chest.addBeneficiary(604800 * j, fraction, address(token), tokenBuyersArray[i]);
-                }
-            }
+            vault.close();
+
+            // Alternatively, don't chest them. Make withdraw (pull) functions in this contract itself.
+            // Also add pull function for owner.
+//            token.transfer(chest, tokenBuyersAmount);
+//
+//            for (uint i = 0; i < tokenBuyersArray.length; i++) {
+//                uint256 bought = tokenBuyersMapping[tokenBuyersArray[i]];
+//                uint256 fraction = bought.div(uint256(8));
+//                for (uint8 j = 1; j <= 8; j++) {
+//                    // addBeneficiary(uint _releaseDelay, uint _amount, address _token, address _beneficiary)
+//                    chest.addBeneficiary(604800 * j, fraction, address(token), tokenBuyersArray[i]);
+//                }
+//            }
 
         } else {
             vault.enableRefunds();
+            token.transfer(owner, token.balanceOf(address(this)));
         }
         // Transfer leftover tokens to owner
-        token.transfer(owner, token.balanceOf(address(this)));
     }
 
     /**
-    * Instantiates a new timelocked token chest and stores it in ICO's state
+    * User can claim tokens once the crowdsale has been finalized
+    *
+    * - first one 8th of their bought tokens is calculated
+    * - then that 8th is multiplied by number of weeks past end of crowdsale date, up to 8, to get to a max of 100%
+    * - then the code checks how much the user has withdrawn so far by subtracting amount of remaining tokens from total bought tokens per user
+    * - then is the user is owed more than they withdrew, they are given the difference. If this difference is more than they have (should not happen), they are given it all
+    * - remaining amount of tokens for user is reduced
+    * - this method can be called by a third party, not just by the owner
     */
-    function createTimedChest() internal {
-        chest = new TokenTimedChestMulti();
+    function claimTokens(address _beneficiary) public {
+        require(isFinalized);
+
+        // Determine fraction of deserved tokens for user
+        fractionalize(_beneficiary);
+
+        // Need to be able to withdraw by having some
+        require(tokenBuyersMapping[_beneficiary] > 0 && tokenBuyersRemaining[_beneficiary] > 0);
+
+        // Max 8 because we're giving out 12.5% per week and 8 * 12.5% = 100%
+        uint256 w = weeksFromEnd();
+        if (w > 8) {
+            w = 8;
+        }
+        // Total number of tokens user was due by now
+        uint256 totalDueByNow = w.mul(tokenBuyersFraction[_beneficiary]);
+
+        // How much the user has withdrawn so far
+        uint256 totalWithdrawnByNow = totalWithdrawn(_beneficiary);
+
+        if (totalDueByNow > totalWithdrawnByNow) {
+            uint256 diff = totalDueByNow.sub(totalWithdrawnByNow);
+            if (diff > tokenBuyersRemaining[_beneficiary]) {
+                diff = tokenBuyersRemaining[_beneficiary];
+            }
+            token.transfer(_beneficiary, diff);
+            tokenBuyersRemaining[_beneficiary] = tokenBuyersRemaining[_beneficiary].sub(diff);
+        }
     }
+
+    // Determine 1/8th of every user's contribution in their deserved tokens
+    function fractionalize(address _beneficiary) internal {
+        require(tokenBuyersMapping[_beneficiary] > 0);
+        if (tokenBuyersFraction[_beneficiary] == 0) {
+            tokenBuyersRemaining[_beneficiary] = tokenBuyersMapping[_beneficiary];
+            // 8 because 100% / 12.5% = 8
+            tokenBuyersFraction[_beneficiary] = tokenBuyersMapping[_beneficiary].div(8);
+        }
+    }
+
+    // How many tokens a user has already withdrawn
+    function totalWithdrawn(address _beneficiary) public view returns(uint256) {
+        if (tokenBuyersFraction[_beneficiary] == 0) {
+            return 0;
+        }
+        return tokenBuyersMapping[_beneficiary].sub(tokenBuyersRemaining[_beneficiary]);
+    }
+
+    // How many weeks, as a whole number, have passed since the end of the crowdsale
+    function weeksFromEnd() public view returns(uint256){
+        require(now > endTime);
+        return percent(now - (now - endTime), 604800, 0);
+    }
+
+    // Withdraw all the leftover tokens if more than 2 weeks since the last withdraw opportunity for contributors has passed
+    function withdrawRest() external onlyOwner {
+        require(weeksFromEnd() > 9);
+        token.transfer(owner, token.balanceOf(address(this)));
+    }
+
+    // Helper function to do rounded division
+    function percent(uint numerator, uint denominator, uint precision) internal pure returns(uint256 quotient) {
+        // caution, check safe-to-multiply here
+        uint _numerator  = numerator * 10 ** (precision+1);
+        // with rounding of last digit
+        uint _quotient =  ((_numerator / denominator) + 5) / 10;
+        return ( _quotient);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
     * Initiates a withdraw-all-due command on the chest, sending due tokens
     * Only callable if the crowdsale was successful and it's finished
     */
-    function withdrawAllDue() public onlyOwner {
-        require(isFinalized && goalReached());
-        chest.withdrawAllDue();
+//    function withdrawAllDue() public onlyOwner {
+//        require(isFinalized && goalReached());
+//        chest.withdrawAllDue();
+//    }
+
+    function unsoldTokens() public view returns (uint) {
+        if (token.balanceOf(address(this)) == 0) {
+            return 0;
+        }
+        return token.balanceOf(address(this)) - tokenBuyersAmount;
     }
 }
 

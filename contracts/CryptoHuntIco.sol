@@ -1,6 +1,7 @@
 pragma solidity ^0.4.18;
 
-import './TokenTimedChestMulti.sol';
+//import './TokenTimedChestMulti.sol';
+import '../node_modules/zeppelin-solidity/contracts/token/ERC20/StandardToken.sol';
 import '../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
 import '../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
 import '../node_modules/zeppelin-solidity/contracts/crowdsale/RefundVault.sol';
@@ -108,7 +109,7 @@ contract CryptoHuntIco is Ownable {
         buyTokens(msg.sender);
     }
 
-    // ["0xb794f5ea0ba39494ce839613fffba74279579268", "0x281055afc982d96fab65b3a49cac8b878184cb16", "0x6f46cf5569aefa1acc1009290c8e043747172d89", "0xa1dc8d31493681411a5137c6D67bD01935b317D3", "0x90e63c3d53e0ea496845b7a03ec7548b70014a91", "0x53d284357ec70ce289d6d64134dfac8e511c8a3d", "0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8", "0xe853c56864a2ebe4576a807d26fdc4a0ada51919", "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98", "0xf27daff52c38b2c373ad2b9392652ddf433303c4", "0x3d2e397f94e415d7773e72e44d5b5338a99e77d9", "0x6f52730dba7b02beefcaf0d6998c9ae901ea04f9", "0xdc870798b30f74a17c4a6dfc6fa33f5ff5cf5770", "0x1b3cb81e51011b549d78bf720b0d924ac763a7c2", "0xb8487eed31cf5c559bf3f4edd166b949553d0d11", "0x51f9c432a4e59ac86282d6adab4c2eb8919160eb", "0xfe9e8709d3215310075d67e3ed32a380ccf451c8", "0xfca70e67b3f93f679992cd36323eeb5a5370c8e4", "0x07ee55aa48bb72dcc6e9d78256648910de513eca", "0x900d0881a2e85a8e4076412ad1cefbe2d39c566c", "0x3bf86ed8a3153ec933786a02ac090301855e576b", "0xbf09d77048e270b662330e9486b38b43cd781495", "0xdb6fd484cfa46eeeb73c71edee823e4812f9e2e1", "0x847ed5f2e5dde85ea2b685edab5f1f348fb140ed", "0x9d2bfc36106f038250c01801685785b16c86c60d", "0x2b241f037337eb4acc61849bd272ac133f7cdf4b", "0xab5801a7d398351b8be11c439e05c5b3259aec9b", "0xa7e4fecddc20d83f36971b67e13f1abc98dfcfa6", "0x9f1de00776811f916790be357f1cabf6ac1eca65", "0x7d04d2edc058a1afc761d9c99ae4fc5c85d4c8a6"]
+    // ["0x1dF184eA46b58719A7213f4c8a03870A309BcD64", "0xb794f5ea0ba39494ce839613fffba74279579268", "0x281055afc982d96fab65b3a49cac8b878184cb16", "0x6f46cf5569aefa1acc1009290c8e043747172d89", "0xa1dc8d31493681411a5137c6D67bD01935b317D3", "0x90e63c3d53e0ea496845b7a03ec7548b70014a91", "0x53d284357ec70ce289d6d64134dfac8e511c8a3d", "0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8", "0xe853c56864a2ebe4576a807d26fdc4a0ada51919", "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98", "0xf27daff52c38b2c373ad2b9392652ddf433303c4", "0x3d2e397f94e415d7773e72e44d5b5338a99e77d9", "0x6f52730dba7b02beefcaf0d6998c9ae901ea04f9", "0xdc870798b30f74a17c4a6dfc6fa33f5ff5cf5770", "0x1b3cb81e51011b549d78bf720b0d924ac763a7c2", "0xb8487eed31cf5c559bf3f4edd166b949553d0d11", "0x51f9c432a4e59ac86282d6adab4c2eb8919160eb", "0xfe9e8709d3215310075d67e3ed32a380ccf451c8", "0xfca70e67b3f93f679992cd36323eeb5a5370c8e4", "0x07ee55aa48bb72dcc6e9d78256648910de513eca", "0x900d0881a2e85a8e4076412ad1cefbe2d39c566c", "0x3bf86ed8a3153ec933786a02ac090301855e576b", "0xbf09d77048e270b662330e9486b38b43cd781495", "0xdb6fd484cfa46eeeb73c71edee823e4812f9e2e1", "0x847ed5f2e5dde85ea2b685edab5f1f348fb140ed", "0x9d2bfc36106f038250c01801685785b16c86c60d", "0x2b241f037337eb4acc61849bd272ac133f7cdf4b", "0xab5801a7d398351b8be11c439e05c5b3259aec9b", "0xa7e4fecddc20d83f36971b67e13f1abc98dfcfa6", "0x9f1de00776811f916790be357f1cabf6ac1eca65", "0x7d04d2edc058a1afc761d9c99ae4fc5c85d4c8a6"]
     function whitelistAddresses(address[] users) onlyOwner external {
         for (uint i = 0; i < users.length; i++) {
             wl[users[i]] = true;
@@ -168,7 +169,7 @@ contract CryptoHuntIco is Ownable {
         bool withinPeriod = now >= whitelistEndTime && now <= endTime;
 
         // if whitelisted, and in wl period, and value is <= 5, ok
-        bool whitelisted = now >= startTime && now <= whitelistEndTime && msg.value <= 5 ether && wl[msg.sender];
+        bool whitelisted = now >= startTime && now <= whitelistEndTime && tokenBuyersMapping[beneficiary].add(msg.value) <= 5 ether && wl[msg.sender];
 
         return withinCap && (withinPeriod || whitelisted) && nonZeroPurchase;
     }
@@ -294,7 +295,7 @@ contract CryptoHuntIco is Ownable {
 
     // How many tokens a user has already withdrawn
     function totalWithdrawn(address _beneficiary) public view returns(uint256) {
-        if (tokenBuyersMapping[_beneficiary] == 0) {
+        if (tokenBuyersFraction[_beneficiary] == 0) {
             return 0;
         }
         return tokenBuyersMapping[_beneficiary].sub(tokenBuyersRemaining[_beneficiary]);
@@ -313,7 +314,7 @@ contract CryptoHuntIco is Ownable {
     }
 
     // Helper function to do rounded division
-    function percent(uint numerator, uint denominator, uint precision) internal view returns(uint256 quotient) {
+    function percent(uint numerator, uint denominator, uint precision) internal pure returns(uint256 quotient) {
         // caution, check safe-to-multiply here
         uint _numerator  = numerator * 10 ** (precision+1);
         // with rounding of last digit
