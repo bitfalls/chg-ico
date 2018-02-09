@@ -42,7 +42,7 @@ contract CryptoHuntIco is Ownable {
     mapping(address => uint256) public tokenBuyersFraction;
     mapping(address => uint256) public tokenBuyersRemaining;
 
-    TokenTimedChestMulti public chest;
+//    TokenTimedChestMulti public chest;
 
     // List of addresses who can purchase in pre-sale
     mapping(address => bool) public wl;
@@ -100,8 +100,7 @@ contract CryptoHuntIco is Ownable {
         whitelistEndTime = startTime.add(wlDuration * 1 seconds);
         endTime = whitelistEndTime.add(duration * 1 seconds);
 
-        createTimedChest();
-        chest = new TokenTimedChestMulti();
+        //chest = new TokenTimedChestMulti();
     }
 
     // fallback function can be used to buy tokens
@@ -137,7 +136,7 @@ contract CryptoHuntIco is Ownable {
         // update state
         weiRaised = weiRaised.add(weiAmount);
 
-        if (tokenBuyersMapping[beneficiary] > 0) {
+        if (tokenBuyersMapping[beneficiary] == 0) {
             tokenBuyersArray.push(beneficiary);
         }
         tokenBuyersMapping[beneficiary] = tokenBuyersMapping[beneficiary].add(tokenAmount);
@@ -203,7 +202,7 @@ contract CryptoHuntIco is Ownable {
 
     function forceRefundState() external onlyOwner {
         vault.enableRefunds();
-        token.transfer(owner, remainingTokens());
+        token.transfer(owner, unsoldTokens());
         Finalized();
         isFinalized = true;
         forcedRefund = true;
@@ -238,7 +237,7 @@ contract CryptoHuntIco is Ownable {
 
         } else {
             vault.enableRefunds();
-            token.transfer(owner, remainingTokens());
+            token.transfer(owner, unsoldTokens());
         }
         // Transfer leftover tokens to owner
     }
@@ -295,11 +294,14 @@ contract CryptoHuntIco is Ownable {
 
     // How many tokens a user has already withdrawn
     function totalWithdrawn(address _beneficiary) public view returns(uint256) {
+        if (tokenBuyersMapping[_beneficiary] == 0) {
+            return 0;
+        }
         return tokenBuyersMapping[_beneficiary].sub(tokenBuyersRemaining[_beneficiary]);
     }
 
     // How many weeks, as a whole number, have passed since the end of the crowdsale
-    function weeksFromEnd() returns(uint256){
+    function weeksFromEnd() public view returns(uint256){
         require(now > endTime);
         return percent(now - (now - endTime), 604800, 0);
     }
@@ -307,7 +309,7 @@ contract CryptoHuntIco is Ownable {
     // Withdraw all the leftover tokens if more than 2 weeks since the last withdraw opportunity for contributors has passed
     function withdrawRest() external onlyOwner {
         require(weeksFromEnd() > 9);
-        token.transfer(owner, remainingTokens());
+        token.transfer(owner, unsoldTokens());
     }
 
     // Helper function to do rounded division
@@ -337,12 +339,15 @@ contract CryptoHuntIco is Ownable {
     * Initiates a withdraw-all-due command on the chest, sending due tokens
     * Only callable if the crowdsale was successful and it's finished
     */
-    function withdrawAllDue() public onlyOwner {
-        require(isFinalized && goalReached());
-        chest.withdrawAllDue();
-    }
+//    function withdrawAllDue() public onlyOwner {
+//        require(isFinalized && goalReached());
+//        chest.withdrawAllDue();
+//    }
 
     function unsoldTokens() public view returns (uint) {
+        if (token.balanceOf(address(this)) == 0) {
+            return 0;
+        }
         return token.balanceOf(address(this)) - tokenBuyersAmount;
     }
 }
