@@ -1,18 +1,20 @@
 pragma solidity ^0.4.18;
 
-contract ERC20Events {
-    event Approval(address indexed src, address indexed guy, uint wad);
-    event Transfer(address indexed src, address indexed dst, uint wad);
-}
+import '../node_modules/zeppelin-solidity/contracts/token/ERC20/StandardToken.sol';
 
-contract ERC20 is ERC20Events {
-    function totalSupply() public view returns (uint) {}
-    function balanceOf(address guy) public view returns (uint) {}
-    function allowance(address src, address guy) public view returns (uint) {}
-    function approve(address guy, uint wad) public returns (bool) {}
-    function transfer(address dst, uint wad) public returns (bool) {}
-    function transferFrom(address src, address dst, uint wad) public returns (bool) {}
-}
+//contract ERC20Events {
+//    event Approval(address indexed src, address indexed guy, uint wad);
+//    event Transfer(address indexed src, address indexed dst, uint wad);
+//}
+//
+//contract ERC20 is ERC20Events {
+//    function totalSupply() public view returns (uint) {}
+//    function balanceOf(address guy) public view returns (uint) {}
+//    function allowance(address src, address guy) public view returns (uint) {}
+//    function approve(address guy, uint wad) public returns (bool) {}
+//    function transfer(address dst, uint wad) public returns (bool) {}
+//    function transferFrom(address src, address dst, uint wad) public returns (bool) {}
+//}
 
 /**
 * Todo: Add events
@@ -29,13 +31,13 @@ contract TokenTimedChestMulti {
         uint amount;
     }
 
-    /** The addresses allowed to do withdraws */
+    // The addresses allowed to do withdraws
     Beneficiary[] public beneficiaries;
 
-    /** Beneficiary-added tokens so far */
+    // Beneficiary-added tokens so far
     mapping (address => uint) public tokensAdded;
 
-    /** Owner / creator of the contract */
+    // Owner / creator of the contract
     address public owner;
 
     modifier onlyAfter(uint _time) {

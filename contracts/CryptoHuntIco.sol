@@ -3,25 +3,7 @@ pragma solidity ^0.4.18;
 import './TokenTimedChestMulti.sol';
 import '../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
 import '../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
-
-contract ERC20Events {
-    event Approval(address indexed src, address indexed guy, uint wad);
-    event Transfer(address indexed src, address indexed dst, uint wad);
-}
-
-contract ERC20 is ERC20Events {
-    function totalSupply() public view returns (uint) {}
-
-    function balanceOf(address guy) public view returns (uint) {}
-
-    function allowance(address src, address guy) public view returns (uint) {}
-
-    function approve(address guy, uint wad) public returns (bool) {}
-
-    function transfer(address dst, uint wad) public returns (bool) {}
-
-    function transferFrom(address src, address dst, uint wad) public returns (bool) {}
-}
+import '../node_modules/zeppelin-solidity/contracts/crowdsale/RefundVault.sol';
 
 contract CryptoHuntIco is Ownable {
     using SafeMath for uint256;
@@ -40,6 +22,9 @@ contract CryptoHuntIco is Ownable {
     uint256 public softcap;
     uint256 public hardcap;
 
+    // refund vault used to hold funds while crowdsale is running
+    RefundVault public vault;
+
     // start and end timestamps where investments are allowed (both inclusive)
     uint256 public startTime;
     uint256 public endTime;
@@ -48,18 +33,22 @@ contract CryptoHuntIco is Ownable {
     uint256 public duration;
     uint256 public wlDuration;
 
+    // A collection of tokens owed to people to be timechested on finalization
+    address[] public tokenBuyersArray;
+    // A sum of tokenbuyers' tokens
+    uint256 public tokenBuyersAmount;
+    // A mapping of buyers and amounts
+    mapping(address => uint) public tokenBuyersMapping;
+
+    TokenTimedChestMulti public chest;
+
+    // List of addresses who can purchase in pre-sale
+    mapping(address => bool) public wl;
+    address[] public wls;
+
     bool public isFinalized = false;
+
     event Finalized();
-
-    modifier onlyAfter(uint _time) {
-        require(now >= _time);
-        _;
-    }
-
-    modifier onlyBy(address _account) {
-        require(msg.sender == _account);
-        _;
-    }
 
     /**
      * event for token purchase logging
@@ -72,23 +61,21 @@ contract CryptoHuntIco is Ownable {
 
     /**
     * @param addr whitelisted user
-    * @param if whitelisted, will almost always be true unless subsequently blacklisted
+    * @param status if whitelisted, will almost always be true unless subsequently blacklisted
     */
     event Whitelisted(address addr, bool status);
 
-    function CryptoHuntIco(uint256 _durationSeconds, uint256 _wlDurationSeconds, address _wallet, address _token, uint _softcap, uint _hardcap) public {
+    function CryptoHuntIco(uint256 _durationSeconds, uint256 _wlDurationSeconds, address _wallet, address _token) public {
         require(_durationSeconds > 0);
         require(_wlDurationSeconds > 0);
         require(_wallet != address(0));
         require(_token != address(0));
-        require(_softcap > 0);
-        require(_hardcap > 0);
-
-        softcap = _softcap;
-        hardcap = _hardcap;
         duration = _durationSeconds;
         wlDuration = _wlDurationSeconds;
+
         wallet = _wallet;
+        vault = new RefundVault(wallet);
+
         token = ERC20(_token);
         owner = msg.sender;
     }
@@ -96,9 +83,16 @@ contract CryptoHuntIco is Ownable {
     /**
     * Setting the rate starts the ICO and sets the end time
     */
-    function setRateAndStart(uint256 _rate) external onlyBy(owner) {
+    function setRateAndStart(uint256 _rate, uint256 _softcap, uint256 _hardcap) external onlyOwner {
+
         require(_rate > 0 && rate < 1);
+        require(_softcap > 0);
+        require(_hardcap > 0);
+        require(_softcap < _hardcap);
         rate = _rate;
+
+        softcap = _softcap;
+        hardcap = _hardcap;
 
         startTime = now;
         whitelistEndTime = startTime.add(wlDuration * 1 seconds);
@@ -106,14 +100,22 @@ contract CryptoHuntIco is Ownable {
     }
 
     // fallback function can be used to buy tokens
-    function () external payable {
+    function() external payable {
         buyTokens(msg.sender);
     }
 
     function whitelistAddresses(address[] users) onlyOwner external {
         for (uint i = 0; i < users.length; i++) {
             wl[users[i]] = true;
+            wls.push(users[i]);
             Whitelisted(users[i], true);
+        }
+    }
+
+    function unwhitelistAddresses(address[] users) onlyOwner external {
+        for (uint i = 0; i < users.length; i++) {
+            wl[users[i]] = false;
+            Whitelisted(users[i], false);
         }
     }
 
@@ -125,18 +127,18 @@ contract CryptoHuntIco is Ownable {
         uint256 weiAmount = msg.value;
 
         // calculate token amount to be created
-        uint256 tokens = getTokenAmount(weiAmount);
+        uint256 tokenAmount = getTokenAmount(weiAmount);
 
         // update state
         weiRaised = weiRaised.add(weiAmount);
 
-        //@todo
-        // transfer token, not mint
+        tokenBuyersMapping[beneficiary] = tokenBuyersMapping[beneficiary].add(tokenAmount);
+        tokenBuyersArray.push(beneficiary);
+        tokenBuyersAmount.add(tokenAmount);
 
-        TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
+        TokenPurchase(msg.sender, beneficiary, weiAmount, tokenAmount);
 
-        //@todo
-        //forwardFunds();
+        forwardFunds();
     }
 
     // @return true if crowdsale event has ended
@@ -144,22 +146,13 @@ contract CryptoHuntIco is Ownable {
         return (weiRaised > hardcap) || now > endTime;
     }
 
-    // @return true if whitelist period has ended
-    function whitelistHasEnded() public view returns (bool) {
-        return now > whitelistEndTime;
-    }
-
-    // Override this method to add business logic to crowdsale when buying
-    // @todo
-    function getTokenAmount(uint256 weiAmount) internal view returns(uint256) {
-        return weiAmount.mul(rate);
+    function getTokenAmount(uint256 weiAmount) internal view returns (uint256) {
+        return weiAmount.mul(rate).div(1e6);
     }
 
     // send ether to the fund collection wallet
-    // override to create custom fund forwarding mechanisms
     function forwardFunds() internal {
-        wallet.transfer(msg.value);
-        // delay until soft cap is passed!
+        vault.deposit.value(msg.value)(msg.sender);
     }
 
     // @return true if the transaction can buy tokens
@@ -168,13 +161,13 @@ contract CryptoHuntIco is Ownable {
         bool nonZeroPurchase = msg.value != 0;
 
         // Still under hardcap
-        bool withinCap = weiRaised.add(msg.value) <= cap;
+        bool withinCap = weiRaised.add(msg.value) <= hardcap;
 
         // if in regular period, ok
-        bool withinPeriod = now >= startTime && now <= endTime;
+        bool withinPeriod = now >= whitelistEndTime && now <= endTime;
 
         // if whitelisted, and in wl period, and value is <= 5, ok
-        // @todo
+        bool whitelisted = now >= startTime && now <= whitelistEndTime && msg.value <= 5 && wl[msg.sender];
 
         return withinCap && (withinPeriod || whitelisted) && nonZeroPurchase;
     }
@@ -182,7 +175,6 @@ contract CryptoHuntIco is Ownable {
     /**
      * @dev Must be called after crowdsale ends, to do some extra finalization
      * work. Calls the contract's finalization function.
-     * @todo
      */
     function finalize() onlyOwner public {
         require(!isFinalized);
@@ -192,14 +184,70 @@ contract CryptoHuntIco is Ownable {
         Finalized();
 
         isFinalized = true;
+
+    }
+
+    // if crowdsale is unsuccessful, investors can claim refunds here
+    function claimRefund() public {
+        require(isFinalized);
+        require(!goalReached());
+
+        vault.refund(msg.sender);
+    }
+
+    function goalReached() public view returns (bool) {
+        return weiRaised >= softcap;
+    }
+
+    function forceRefundState() external onlyOwner {
+        vault.enableRefunds();
+        token.transfer(owner, token.balanceOf(address(this)));
+        Finalized();
+        isFinalized = true;
     }
 
     /**
      * @dev Can be overridden to add finalization logic. The overriding function
      * should call super.finalization() to ensure the chain of finalization is
      * executed entirely.
-     @todo
      */
     function finalization() internal {
+
+        if (goalReached()) {
+            vault.close();
+            // create timed chests for all participants
+            createTimedChest();
+            token.transfer(chest, tokenBuyersAmount);
+
+            for (uint i = 0; i < tokenBuyersArray.length; i++) {
+                uint256 bought = tokenBuyersMapping[tokenBuyersArray[i]];
+                uint256 fraction = bought.div(uint256(8));
+                for (uint8 j = 1; j <= 8; j++) {
+                    // addBeneficiary(uint _releaseDelay, uint _amount, address _token, address _beneficiary)
+                    chest.addBeneficiary(604800 * j, fraction, address(token), tokenBuyersArray[i]);
+                }
+            }
+
+        } else {
+            vault.enableRefunds();
+        }
+        // Transfer leftover tokens to owner
+        token.transfer(owner, token.balanceOf(address(this)));
+    }
+
+    /**
+    * Instantiates a new timelocked token chest and stores it in ICO's state
+    */
+    function createTimedChest() internal {
+        chest = new TokenTimedChestMulti();
+    }
+
+    /**
+    * Initiates a withdraw-all-due command on the chest, sending due tokens
+    * Only callable if the crowdsale was successful and it's finished
+    */
+    function withdrawAllDue() public onlyOwner {
+        require(isFinalized && goalReached());
+        chest.withdrawAllDue();
     }
 }
