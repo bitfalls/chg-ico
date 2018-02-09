@@ -38,7 +38,9 @@ contract CryptoHuntIco is Ownable {
     // A sum of tokenbuyers' tokens
     uint256 public tokenBuyersAmount;
     // A mapping of buyers and amounts
-    mapping(address => uint) public tokenBuyersMapping;
+    mapping(address => uint256) public tokenBuyersMapping;
+    mapping(address => uint256) public tokenBuyersFraction;
+    mapping(address => uint256) public tokenBuyersRemaining;
 
     TokenTimedChestMulti public chest;
 
@@ -208,9 +210,12 @@ contract CryptoHuntIco is Ownable {
     }
 
     /**
-     * @dev Can be overridden to add finalization logic. The overriding function
-     * should call super.finalization() to ensure the chain of finalization is
-     * executed entirely.
+     * Wraps up the crowdsale
+     *
+     * If goal was not reached, refund mode is activated, tokens are sent back to crowdfund owner. Otherwise:
+     *
+     * - vault is closed and Eth funds are forwarded to wallet
+     * -
      */
     function finalization() internal {
 
@@ -220,27 +225,113 @@ contract CryptoHuntIco is Ownable {
 
             // Alternatively, don't chest them. Make withdraw (pull) functions in this contract itself.
             // Also add pull function for owner.
-            token.transfer(chest, tokenBuyersAmount);
-
-            for (uint i = 0; i < tokenBuyersArray.length; i++) {
-                uint256 bought = tokenBuyersMapping[tokenBuyersArray[i]];
-                uint256 fraction = bought.div(uint256(8));
-                for (uint8 j = 1; j <= 8; j++) {
-                    // addBeneficiary(uint _releaseDelay, uint _amount, address _token, address _beneficiary)
-                    chest.addBeneficiary(604800 * j, fraction, address(token), tokenBuyersArray[i]);
-                }
-            }
+//            token.transfer(chest, tokenBuyersAmount);
+//
+//            for (uint i = 0; i < tokenBuyersArray.length; i++) {
+//                uint256 bought = tokenBuyersMapping[tokenBuyersArray[i]];
+//                uint256 fraction = bought.div(uint256(8));
+//                for (uint8 j = 1; j <= 8; j++) {
+//                    // addBeneficiary(uint _releaseDelay, uint _amount, address _token, address _beneficiary)
+//                    chest.addBeneficiary(604800 * j, fraction, address(token), tokenBuyersArray[i]);
+//                }
+//            }
 
         } else {
             vault.enableRefunds();
+            token.transfer(owner, remainingTokens());
         }
         // Transfer leftover tokens to owner
+    }
+
+    /**
+    * User can claim tokens once the crowdsale has been finalized
+    *
+    * - first one 8th of their bought tokens is calculated
+    * - then that 8th is multiplied by number of weeks past end of crowdsale date, up to 8, to get to a max of 100%
+    * - then the code checks how much the user has withdrawn so far by subtracting amount of remaining tokens from total bought tokens per user
+    * - then is the user is owed more than they withdrew, they are given the difference. If this difference is more than they have (should not happen), they are given it all
+    * - remaining amount of tokens for user is reduced
+    * - this method can be called by a third party, not just by the owner
+    */
+    function claimTokens(address _beneficiary) public {
+        require(isFinalized);
+
+        // Need to be able to withdraw by having some
+        require(tokenBuyersMapping[_beneficiary] > 0 && tokenBuyersRemaining[_beneficiary] > 0);
+
+        // Determine fraction of deserved tokens for user
+        fractionalize(_beneficiary);
+
+        // Max 8 because we're giving out 12.5% per week and 8 * 12.5% = 100%
+        uint256 w = weeksFromEnd();
+        if (w > 8) {
+            w = 8;
+        }
+        // Total number of tokens user was due by now
+        uint256 totalDueByNow = w.mul(tokenBuyersFraction[_beneficiary]);
+
+        // How much the user has withdrawn so far
+        uint256 totalWithdrawnByNow = totalWithdrawn(_beneficiary);
+
+        if (totalDueByNow > totalWithdrawnByNow) {
+            uint256 diff = totalDueByNow.sub(totalWithdrawnByNow);
+            if (diff > tokenBuyersRemaining[_beneficiary]) {
+                diff = tokenBuyersRemaining[_beneficiary];
+            }
+            token.transfer(_beneficiary, diff);
+            tokenBuyersRemaining[_beneficiary] = tokenBuyersRemaining[_beneficiary].sub(diff);
+        }
+    }
+
+    // Determine 1/8th of every user's contribution in their deserved tokens
+    function fractionalize(address _beneficiary) internal {
+        require(tokenBuyersMapping[_beneficiary] > 0);
+        if (tokenBuyersFraction[_beneficiary] == 0) {
+            tokenBuyersRemaining[_beneficiary] = tokenBuyersMapping[_beneficiary];
+            // 8 because 100% / 12.5% = 8
+            tokenBuyersFraction[_beneficiary] = tokenBuyersMapping[_beneficiary].div(8);
+        }
+    }
+
+    // How many tokens a user has already withdrawn
+    function totalWithdrawn(address _beneficiary) public view returns(uint256) {
+        return tokenBuyersMapping[_beneficiary].sub(tokenBuyersRemaining[_beneficiary]);
+    }
+
+    // How many weeks, as a whole number, have passed since the end of the crowdsale
+    function weeksFromEnd() returns(uint256){
+        require(now > endTime);
+        return percent(now - (now - endTime), 604800, 0);
+    }
+
+    // Withdraw all the leftover tokens if more than 2 weeks since the last withdraw opportunity for contributors has passed
+    function withdrawRest() external onlyOwner {
+        require(weeksFromEnd() > 9);
         token.transfer(owner, remainingTokens());
     }
 
-    function lockTokens(uint numberOfParticipants) {
-
+    // Helper function to do rounded division
+    function percent(uint numerator, uint denominator, uint precision) internal view returns(uint256 quotient) {
+        // caution, check safe-to-multiply here
+        uint _numerator  = numerator * 10 ** (precision+1);
+        // with rounding of last digit
+        uint _quotient =  ((_numerator / denominator) + 5) / 10;
+        return ( _quotient);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
     * Initiates a withdraw-all-due command on the chest, sending due tokens
