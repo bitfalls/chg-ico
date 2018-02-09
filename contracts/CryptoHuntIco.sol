@@ -318,8 +318,8 @@ contract CryptoHuntIco is Ownable {
     // How many weeks, as a whole number, have passed since the end of the crowdsale
     function weeksFromEnd() public view returns(uint256){
         require(now > endTime);
-//        return percent(now - (now - endTime), 604800, 0);
-        return percent(now - (now - endTime), 60, 0);
+        return percent(now - (now - endTime), 604800, 0);
+//        return percent(now - (now - endTime), 60, 0);
     }
 
     // Withdraw all the leftover tokens if more than 2 weeks since the last withdraw opportunity for contributors has passed

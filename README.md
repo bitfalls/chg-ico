@@ -15,7 +15,8 @@ More information: [Cryptohuntgame.com](http://cryptohuntgame.com).
 
 ### Known issues
 
-- claim tokens function pulls all tokens instantly instead of 12.5% per week
+- claim tokens function pulls all tokens instantly instead of 12.5% per week - looks like weeksFromEnd() function is bugged
+- owner cannot initiate mass forced-claim for users. Users need to do it themselves. Minor barrier, but [favorable](https://blog.zeppelin.solutions/onward-with-ethereum-smart-contract-security-97a827e47702)
 
 ### Alternative solutions
 
