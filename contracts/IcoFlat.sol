@@ -113,6 +113,7 @@ contract CryptoHuntIco is Ownable {
     mapping(address => uint256) public tokenBuyersMapping;
     mapping(address => uint256) public tokenBuyersFraction;
     mapping(address => uint256) public tokenBuyersRemaining;
+    mapping(address => uint256) public tokenBuyersContributed;
 
 //    TokenTimedChestMulti public chest;
 
@@ -198,7 +199,7 @@ contract CryptoHuntIco is Ownable {
     // low level token purchase function
     function buyTokens(address beneficiary) public payable {
         require(beneficiary != address(0));
-        require(validPurchase());
+        require(validPurchase(beneficiary));
 
         uint256 weiAmount = msg.value;
 
@@ -207,6 +208,7 @@ contract CryptoHuntIco is Ownable {
 
         // update state
         weiRaised = weiRaised.add(weiAmount);
+        tokenBuyersContributed[beneficiary] = tokenBuyersContributed[beneficiary].add(weiAmount);
 
         if (tokenBuyersMapping[beneficiary] == 0) {
             tokenBuyersArray.push(beneficiary);
@@ -229,7 +231,7 @@ contract CryptoHuntIco is Ownable {
     }
 
     // @return true if the transaction can buy tokens
-    function validPurchase() internal view returns (bool) {
+    function validPurchase(address _beneficiary) internal view returns (bool) {
         // Sent more than 0 eth
         bool nonZeroPurchase = msg.value > 0;
 
@@ -240,7 +242,7 @@ contract CryptoHuntIco is Ownable {
         bool withinPeriod = now >= whitelistEndTime && now <= endTime;
 
         // if whitelisted, and in wl period, and value is <= 5, ok
-        bool whitelisted = now >= startTime && now <= whitelistEndTime && msg.value <= 5 ether && wl[msg.sender];
+        bool whitelisted = now >= startTime && now <= whitelistEndTime && tokenBuyersContributed[_beneficiary].add(msg.value) <= 5 ether && wl[msg.sender];
 
         return withinCap && (withinPeriod || whitelisted) && nonZeroPurchase;
     }
@@ -354,13 +356,19 @@ contract CryptoHuntIco is Ownable {
         }
     }
 
+    function claimMyTokens() external {
+        claimTokens(msg.sender);
+    }
+
     // Determine 1/8th of every user's contribution in their deserved tokens
     function fractionalize(address _beneficiary) internal {
         require(tokenBuyersMapping[_beneficiary] > 0);
         if (tokenBuyersFraction[_beneficiary] == 0) {
             tokenBuyersRemaining[_beneficiary] = tokenBuyersMapping[_beneficiary];
             // 8 because 100% / 12.5% = 8
-            tokenBuyersFraction[_beneficiary] = tokenBuyersMapping[_beneficiary].div(8);
+//            tokenBuyersFraction[_beneficiary] = tokenBuyersMapping[_beneficiary].div(8);
+//            tokenBuyersFraction[_beneficiary] = tokenBuyersMapping[_beneficiary] / 8;
+        tokenBuyersFraction[_beneficiary] = percent(tokenBuyersMapping[_beneficiary], 8, 0);
         }
     }
 
@@ -375,7 +383,8 @@ contract CryptoHuntIco is Ownable {
     // How many weeks, as a whole number, have passed since the end of the crowdsale
     function weeksFromEnd() public view returns(uint256){
         require(now > endTime);
-        return percent(now - (now - endTime), 604800, 0);
+//        return percent(now - (now - endTime), 604800, 0);
+        return percent(now - (now - endTime), 60, 0);
     }
 
     // Withdraw all the leftover tokens if more than 2 weeks since the last withdraw opportunity for contributors has passed
