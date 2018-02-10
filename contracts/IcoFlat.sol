@@ -437,6 +437,10 @@ contract CryptoHuntIco is Ownable {
         }
         return token.balanceOf(address(this)) - tokenBuyersAmount;
     }
+
+    function tokenBalance() public view returns (uint) {
+        return token.balanceOf(address(this));
+    }
 }
 
 contract RefundVault is Ownable {
