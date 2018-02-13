@@ -250,7 +250,7 @@ contract CryptoHuntIco is Ownable {
         bool withinPeriod = now >= whitelistEndTime && now <= endTime;
 
         // if whitelisted, and in wl period, and value is <= 5, ok
-        bool whitelisted = now >= startTime && now <= whitelistEndTime && tokenBuyersContributed[_beneficiary].add(msg.value) <= 5 ether && wl[msg.sender];
+        bool whitelisted = now >= startTime && now <= whitelistEndTime && tokenBuyersContributed[_beneficiary].add(msg.value) <= 15 ether && wl[msg.sender];
 
         return withinCap && (withinPeriod || whitelisted) && nonZeroPurchase;
     }
