@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 import '../node_modules/zeppelin-solidity/contracts/token/ERC20/StandardToken.sol';
 import '../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol';
 import '../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
-import '../node_modules/zeppelin-solidity/contracts/crowdsale/RefundVault.sol';
+import '../node_modules/zeppelin-solidity/contracts/crowdsale/distribution/utils/RefundVault.sol';
 
 contract CryptoHuntIco is Ownable {
     // Using SafeMath prevents integer overflows and other mathy side effects
@@ -326,6 +326,7 @@ contract CryptoHuntIco is Ownable {
     */
     function claimTokens(address _beneficiary) public {
         require(isFinalized);
+        require(weeksFromEndPlusMonth() > 0);
 
         // Determine fraction of deserved tokens for user
         fractionalize(_beneficiary);
@@ -334,7 +335,8 @@ contract CryptoHuntIco is Ownable {
         require(tokenBuyersMapping[_beneficiary] > 0 && tokenBuyersRemaining[_beneficiary] > 0);
 
         // Max 8 because we're giving out 12.5% per week and 8 * 12.5% = 100%
-        uint256 w = weeksFromEnd();
+//        uint256 w = weeksFromEnd();
+        uint256 w = weeksFromEndPlusMonth();
         if (w > 8) {
             w = 8;
         }
@@ -356,6 +358,18 @@ contract CryptoHuntIco is Ownable {
 
     function claimMyTokens() external {
         claimTokens(msg.sender);
+    }
+
+    function massClaim() external onlyOwner {
+        massClaimLimited(0, tokenBuyersArray.length - 1);
+    }
+
+    function massClaimLimited(uint start, uint end) public onlyOwner {
+        for (uint i = start; i <= end; i++) {
+            if (tokenBuyersRemaining[tokenBuyersArray[i]] > 0) {
+                claimTokens(tokenBuyersArray[i]);
+            }
+        }
     }
 
     // Determine 1/8th of every user's contribution in their deserved tokens
@@ -381,6 +395,12 @@ contract CryptoHuntIco is Ownable {
         require(now > endTime);
         return percent(now - endTime, 604800, 0);
         //return percent(now - endTime, 60, 0);
+    }
+
+    function weeksFromEndPlusMonth() public view returns (uint256) {
+        require(now > (endTime + 30 days));
+        return percent(now - endTime + 30 days, 604800, 0);
+        //return percent(now - endTime + 30 days, 60, 0);
     }
 
     // Withdraw all the leftover tokens if more than 2 weeks since the last withdraw opportunity for contributors has passed

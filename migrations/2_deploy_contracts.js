@@ -17,3 +17,8 @@ module.exports = function(deployer) {
 // module.exports = function(deployer) {
 //   deployer.deploy(TokenTimedChestMulti);
 // };
+
+// var CryptoHuntToken = artifacts.require('CryptoHuntToken');
+// module.exports = function(deployer) {
+//   deployer.deploy(CryptoHuntToken);
+// }
