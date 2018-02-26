@@ -136,7 +136,12 @@ contract CryptoHuntIco is Ownable {
         softcap = _softcap;
         hardcap = _hardcap;
 
-        startTime = now;
+        if (now > 1519941600) {
+            startTime = now;
+        } else {
+            startTime = 1519941600;
+        }
+
         whitelistEndTime = startTime.add(wlDuration * 1 seconds);
         endTime = whitelistEndTime.add(duration * 1 seconds);
     }
